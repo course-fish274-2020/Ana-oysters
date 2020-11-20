@@ -22,10 +22,13 @@ Graph of the average lengths of shells in each population over time.
 ```{r}
 
 popul_days <- group_by(PS_larvae, Population, Date)
-#averge length for each population
+#average length for each population
 avg_l_popul <- summarize(popul_days, mean_l = mean(Average_Length), na.rm = TRUE)
+#changed date from normal to just days after start
+avg_l_popul_days <- avg_l_popul %>%
+  mutate(Day = str_replace(Date, c = (0, 14, 7, 0, 14, 7, 0, 14, 7)) 
 #scatterplot of days vs length for each population with a line of best fit for each population
-daysvslength <- ggplot(data = avg_l_popul, mapping = aes(x = Date, y = mean_l, group = Population)) +
+daysvslength <- ggplot(data = avg_l_popul_days, mapping = aes(x = Day, y = mean_l, group = Population)) +
   geom_point(aes(shape = Population, color = Population, size = 2)) +
   labs(x = "Days", y = "Average Shell Length (mm)")
 print(daysvslength)
