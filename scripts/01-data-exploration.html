@@ -418,10 +418,27 @@ summary {
 </div>
 
 
+<p>Loading necessary packages.</p>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 3.6.3</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(ggplot2)</code></pre>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 3.6.3</code></pre>
 <p>Reading in the .csv data files from Figshare.</p>
-<pre class="r"><code>PS_final &lt;- read.csv(&quot;../raw_data/Copy of PS_Larvae.csv&quot;)
+<pre class="r"><code>PS_larvae &lt;- read.csv(&quot;../raw_data/Copy of PS_Larvae.csv&quot;)
 oyster_tile_size &lt;- read.csv(&quot;../raw_data/Copy of Oyster Tile Size Data.csv&quot;)
 larval_counts &lt;- read.csv(&quot;../raw_data/Copy of Larval counts - Day 1-By Family.csv&quot;)</code></pre>
+<p>Graph of the average lengths of shells in each population over time.</p>
+<pre class="r"><code>popul_days &lt;- group_by(PS_larvae, Population, Days.after.start)
+daysvslength &lt;- ggplot(popul_days, mapping = aes(x = Date, y = Average.Length)) +
+  geom_point()</code></pre>
 
 
 
