@@ -4,8 +4,9 @@ author: "Ana Olsen"
 date: "11/18/2020"
 output: html_document
 ---
+
 First I loaded necessary packages.
-```{r}
+```{r, warning = FALSE, message = FALSE}
 library(dplyr)
 library(ggplot2)
 ```
@@ -18,9 +19,8 @@ PS_larvae <- read.csv("../raw_data/Copy of PS_Larvae.csv")
 oyster_tile_size <- read.csv("../raw_data/Copy of Oyster Tile Size Data.csv")
 larval_counts <- read.csv("../raw_data/Copy of Larval counts - Day 1-By Family.csv")
 ```
-
-I graphed the average length of the oyster shells in each population over time for the three dates it was measured.
-```{r}
+Three populations of oysters were used and allowed to grow under the same conditions. I graphed the average length of the oyster shells in each population over time for the three dates it was measured.
+```{r, message = FALSE}
 
 popul_days <- group_by(PS_larvae, Population, Date)
 #average length for each population
