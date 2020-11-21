@@ -4,13 +4,14 @@ author: "Ana Olsen"
 date: "11/18/2020"
 output: html_document
 ---
-Loading necessary packages.
+First I loaded necessary packages.
 ```{r}
 library(dplyr)
 library(ggplot2)
 ```
 
-Reading in the .csv data files from Figshare.
+Then I read in the .csv data files from Figshare. The experiment data I'm using came from a paper called "Consistent diferences in Fitness Traits across Multiple Generations of Olympia Oysters", listed as "F2 Puget Sound Olympia Oyster Population Structure" on Figshare. It was created by Katherine Silliman, Tynan Bowyer, and Steven Roberts.
+
 ```{r}
 
 PS_larvae <- read.csv("../raw_data/Copy of PS_Larvae.csv")
@@ -18,15 +19,15 @@ oyster_tile_size <- read.csv("../raw_data/Copy of Oyster Tile Size Data.csv")
 larval_counts <- read.csv("../raw_data/Copy of Larval counts - Day 1-By Family.csv")
 ```
 
-Graph of the average lengths of shells in each population over time.
+I graphed the average length of the oyster shells in each population over time for the three dates it was measured.
 ```{r}
 
 popul_days <- group_by(PS_larvae, Population, Date)
 #average length for each population
 avg_l_popul <- summarize(popul_days, mean_l = mean(Average_Length), na.rm = TRUE)
-#changed date from normal to just days after start
+#added column for days after start
 avg_l_popul$Days = c(0, 14, 7, 0, 14, 7, 0, 14, 7)
-#scatterplot of days vs length for each population with a line of best fit for each population
+#scatterplot of days passed vs length for each population with a line of best fit for each population
 daysvslength <- ggplot(data = avg_l_popul, mapping = aes(x = Days, y = mean_l, group = Population)) +
   geom_point(aes(shape = Population, color = Population, size = 3)) +
   labs(x = "Days", y = "Average Shell Length (mm)") +
