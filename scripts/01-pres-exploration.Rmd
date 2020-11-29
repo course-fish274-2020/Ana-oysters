@@ -10,22 +10,15 @@ output: ioslides_presentation
 The experiment data I'm using came from a paper called ["Consistent diferences in Fitness Traits across Multiple Generations of Olympia Oysters"](https://www.nature.com/articles/s41598-018-24455-3.pdf), listed as ["F2 Puget Sound Olympia Oyster Population Structure"](https://figshare.com/articles/dataset/F2_Puget_Sound_Olympia_Oyster_Population_Structure/5975452?file=10717249) on Figshare. It was created by Katherine Silliman, Tynan Bowyer, and Steven Roberts.
 
 ## The Data
+There are three relevant data tables from the experiment
+-
 
-```{r}
+## PS_Larvae Data
+
+```{r, echo = FALSE}
 PS_larvae <- read.csv("../raw_data/Copy of PS_Larvae.csv") 
 knitr::kable(PS_larvae)
 ```
 
 
-## Slide with R Output
-
-```{r cars, echo = TRUE}
-summary(cars)
-```
-
-## Slide with Plot
-
-```{r pressure}
-plot(pressure)
-```
 
