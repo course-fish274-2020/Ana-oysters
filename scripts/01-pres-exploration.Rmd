@@ -4,6 +4,11 @@ author: "Ana Olsen"
 date: "11/24/2020"
 output: ioslides_presentation
 ---
+```{r, echo = FALSE, warning = FALSE}
+library(ggplot2)
+library(dplyr)
+```
+
 
 ## The Experiment
 
@@ -11,14 +16,35 @@ The experiment data I'm using came from a paper called ["Consistent diferences i
 
 ## The Data
 There are three relevant data tables from the experiment
--
+-PS_larvae: includes lengths and areas for each oyster at three time points
+-oyster_tile_size: 
+-larval_counts: includes counts of population size and number of dead oysters at each time point for each population at each location
 
 ## PS_Larvae Data
 
 ```{r, echo = FALSE}
 PS_larvae <- read.csv("../raw_data/Copy of PS_Larvae.csv") 
-knitr::kable(PS_larvae)
+
+```
+![PS_larvae data table from Figshare]("../images/PS_larvae.jpg")
+
+## Average Shell Length over Time in 3 Populations
+
+```{r, message = FALSE}
+popul_days <- group_by(PS_larvae, Population, Date)
+#average length for each population
+avg_l_popul <- summarize(popul_days, mean_l = mean(Average_Length), na.rm = TRUE)
+#added column for days after start
+avg_l_popul$Days = c(0, 14, 7, 0, 14, 7, 0, 14, 7)
+#scatterplot of days passed vs length for each population with a line of best fit for each population
+daysvslength <- ggplot(data = avg_l_popul, mapping = aes(x = Days, y = mean_l, group = Population)) +
+  geom_point(aes(shape = Population, color = Population, size = 3)) +
+  labs(x = "Days", y = "Average Shell Length (mm)") +
+  scale_x_continuous(breaks = c (0, 7, 14)) +
+  ggtitle("Shell Length over Time by Population")
+print(daysvslength)
 ```
 
 
+#change data table replicate and show for each population at each location
 
