@@ -6,8 +6,9 @@ output: ioslides_presentation
 ---
 ```{r, echo = FALSE, message = FALSE}
 library(ggplot2)
-library(dplyr)
-library(tidyselect)
+library(dplyr)\
+install.packages("tidyverse")
+library(tidyverse)
 ```
 
 
