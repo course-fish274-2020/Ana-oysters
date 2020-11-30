@@ -7,6 +7,7 @@ output: ioslides_presentation
 ```{r, echo = FALSE, message = FALSE}
 library(ggplot2)
 library(dplyr)
+library(tidyselect)
 ```
 
 
@@ -55,10 +56,15 @@ This scatterplot is built from the last one, instead showing the average length 
 popul_days <- group_by(PS_larvae, Population, Date)
 #average length for each population
 avg_l_popul <- summarize(popul_days, mean_l = mean(Average_Length), na.rm = TRUE)
+#add columns for site location and number at location by separating replicate column
+popul_days %>%
+  separate(replicate, into = c("location", "number"), sep = "_")
+avg_l_popul <- select(popul_days, location, number)
 #added column for days after start
 avg_l_popul$Days = c(0, 14, 7, 0, 14, 7, 0, 14, 7)
 #scatterplot of days passed vs length for each population with a line of best fit for each population
-daysvslength <- ggplot(data = avg_l_popul, mapping = aes(x = Days, y = mean_l, group = Population)) +
+daysvslength <- ggplot(data = avg_l_popul, mapping = aes(x = Days, y = mean_l)) +
+  facet_wrap(location, number)
   geom_point(aes(shape = Population, color = Population, size = 3)) +
   labs(x = "Days", y = "Average Shell Length (mm)") +
   scale_x_continuous(breaks = c (0, 7, 14)) +
