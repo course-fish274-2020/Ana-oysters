@@ -19,7 +19,7 @@ library(stringr)
 The experiment data I'm using came from a paper called ["Consistent diferences in Fitness Traits across Multiple Generations of Olympia Oysters"](https://www.nature.com/articles/s41598-018-24455-3.pdf), listed as ["F2 Puget Sound Olympia Oyster Population Structure"](https://figshare.com/articles/dataset/F2_Puget_Sound_Olympia_Oyster_Population_Structure/5975452?file=10717249) on Figshare. It was created by Katherine Silliman, Tynan Bowyer, and Steven Roberts.
 
 ## The Data
-This experiment explored the growth of populations of oysters taken from different locations all grown in the same lab environment.
+This experiment explored the growth of populations of oysters taken from different locations (each with three sites) all grown in the same lab environment.
 
 There are three relevant data tables from the experiment
 
