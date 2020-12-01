@@ -2,13 +2,15 @@
 title: "01-pres-exploration"
 author: "Ana Olsen"
 date: "11/24/2020"
-output: ioslides_presentation
+output:
+  slidy_presentation: default
+  ioslides_presentation: default
 ---
-```{r, echo = FALSE, message = FALSE}
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
 library(ggplot2)
-library(dplyr)\
-install.packages("tidyverse")
-library(tidyverse)
+library(dplyr)
+library(tidyr)
+library(stringr)
 ```
 
 
@@ -29,7 +31,7 @@ This is the layout of the data table used for the following two scatterplots.
 ```{r, echo = FALSE}
 PS_larvae <- read.csv("../raw_data/Copy of PS_Larvae.csv") 
 ```
-![PS_larvae data table from Figshare]('../images/PS_larvae.jpg')
+![PS_larvae data table from Figshare](../images/PS_larvae.jpg)
 
 ## Average Shell Length over Time in 3 Populations
 
@@ -55,19 +57,40 @@ print(daysvslength)
 This scatterplot is built from the last one, instead showing the average length of oyster for each of the three populations at from each of the three sites.
 ```{r, message = FALSE, echo = FALSE}
 popul_days <- group_by(PS_larvae, Population, Date)
-#average length for each population
-avg_l_popul <- summarize(popul_days, mean_l = mean(Average_Length), na.rm = TRUE)
-#add columns for site location and number at location by separating replicate column
-popul_days %>%
-  separate(replicate, into = c("location", "number"), sep = "_")
-avg_l_popul <- select(popul_days, location, number)
-#added column for days after start
-avg_l_popul$Days = c(0, 14, 7, 0, 14, 7, 0, 14, 7)
+popul_days_sep <- popul_days %>%
+  separate(Replicate, into = c("location", "number"), sep = "_") 
+#changed NA values in Days.after.start to 0
+popul_days_sep$Days.after.start[is.na(popul_days$Days.after.start)] <- 0
+#making individual data tables for each location
+fidalgo_bay <- filter(popul_days_sep, str_detect(Sample_Name, "NF"), na.rm = TRUE)
+oyster_bay <- filter(popul_days_sep, str_detect(Sample_Name, "SS"), na.rm = TRUE)
+daobob_bay <- filter(popul_days_sep, str_detect(Sample_Name, "HC"), na.rm = TRUE)
+
+```
+
+
+```{r, message = FALSE, echo = FALSE}
 #scatterplot of days passed vs length for each population with a line of best fit for each population
-daysvslength <- ggplot(data = avg_l_popul, mapping = aes(x = Days, y = mean_l)) +
-  facet_wrap(location, number)
-  geom_point(aes(shape = Population, color = Population, size = 3)) +
-  labs(x = "Days", y = "Average Shell Length (mm)") +
+daysvslength_fidalgo <- ggplot(data = fidalgo_bay, mapping = aes(x = Days.after.start, y = Average_Length, group = number)) +
+  geom_point(aes(size = 3, shape = number, color = number)) +
   scale_x_continuous(breaks = c (0, 7, 14)) +
-  ggtitle("Shell Length over Time by Population")
-print(daysvslength)
+  labs(x = "Days", y = "Average Shell Length (mm)") +
+  ggtitle("Shell Length over Time by Site at Fidalgo Bay") 
+daysvslength_oyster <- ggplot(data = oyster_bay, mapping = aes(x = Days.after.start, y = Average_Length, group = number)) +
+  geom_point(aes(size = 3, shape = number, color = number)) +
+  scale_x_continuous(breaks = c (0, 7, 14)) +
+  labs(x = "Days", y = "Average Shell Length (mm)") +
+  ggtitle("Shell Length over Time by Site at Oyster Bay") 
+daysvslength_daobob <- ggplot(data = daobob_bay, mapping = aes(x = Days.after.start, y = Average_Length, group = number)) +
+  geom_point(aes(size = 3, shape = number, color = number)) +
+  scale_x_continuous(breaks = c (0, 7, 14)) +
+  labs(x = "Days", y = "Average Shell Length (mm)") +
+  ggtitle("Shell Length over Time by Site at Daobob Bay") 
+print(daysvslength_fidalgo)
+print(daysvslength_oyster)
+print(daysvslength_daobob)
+```
+
+
+
+
