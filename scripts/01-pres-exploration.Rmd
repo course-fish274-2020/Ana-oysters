@@ -22,8 +22,11 @@ The experiment data I'm using came from a paper called ["Consistent diferences i
 This experiment explored the growth of populations of oysters taken from different locations all grown in the same lab environment.
 
 There are three relevant data tables from the experiment
+
 1. PS_larvae: includes lengths and areas for each oyster at three time points
-2. oyster_tile_size: 
+
+2. oyster_tile_size: size data in relation to tile grown on
+
 3. larval_counts: includes counts of population size and number of dead oysters at each time point for each population at each location
 
 ## PS_Larvae Data
@@ -57,20 +60,21 @@ print(daysvslength)
 This scatterplot is built from the last one, instead showing the average length of oyster for each of the three populations at from each of the three sites.
 ```{r, message = FALSE, echo = FALSE}
 popul_days <- group_by(PS_larvae, Population, Date)
+#made location and site number columns to use for filtering and later scatterplots
 popul_days_sep <- popul_days %>%
   separate(Replicate, into = c("location", "number"), sep = "_") 
 #changed NA values in Days.after.start to 0
 popul_days_sep$Days.after.start[is.na(popul_days$Days.after.start)] <- 0
 #making individual data tables for each location
-fidalgo_bay <- filter(popul_days_sep, str_detect(Sample_Name, "NF"), na.rm = TRUE)
-oyster_bay <- filter(popul_days_sep, str_detect(Sample_Name, "SS"), na.rm = TRUE)
-daobob_bay <- filter(popul_days_sep, str_detect(Sample_Name, "HC"), na.rm = TRUE)
+fidalgo_bay <- filter(popul_days_sep, str_detect(location, "NF"), na.rm = TRUE)
+oyster_bay <- filter(popul_days_sep, str_detect(location, "SS"), na.rm = TRUE)
+daobob_bay <- filter(popul_days_sep, str_detect(location, "HC"), na.rm = TRUE)
 
 ```
 
 
 ```{r, message = FALSE, echo = FALSE}
-#scatterplot of days passed vs length for each population with a line of best fit for each population
+#3 scatterplots of days passed vs length for each population location with site-specific data
 daysvslength_fidalgo <- ggplot(data = fidalgo_bay, mapping = aes(x = Days.after.start, y = Average_Length, group = number)) +
   geom_point(aes(size = 3, shape = number, color = number)) +
   scale_x_continuous(breaks = c (0, 7, 14)) +
