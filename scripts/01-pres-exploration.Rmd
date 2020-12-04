@@ -35,7 +35,7 @@ This is the layout of the data table used for the following  scatterplots. Measu
 ```{r, echo = FALSE}
 PS_larvae <- read.csv("../raw_data/Copy of PS_Larvae.csv") 
 ```
-![PS_larvae data table from Figshare](../images/PS_larvae.jpg){width=30%}
+![PS_larvae data table from Figshare](../images/PS_larvae.jpg){width=50%}
 
 ## Average Shell Length over Time in 3 Populations
 

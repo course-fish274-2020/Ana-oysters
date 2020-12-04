@@ -19,7 +19,8 @@ Below is the organization and contents of all the folders in my project.
 -Copy of Larval counts - Day 1-By Family.csv: original data table of larval_counts data frame, includes counts of population size and number of dead oysters at each time point for each population at each location
 
 ##output
--: copy of knitted final presentation file
+-01-data-exploration.html/_files: copy of knitted presentation beginning, assignment from an earlier week 
+-01-pres-exploration.html/_files: copy of knitted final presentation file
 
 ##images
 -PS_larvae.jpg: image of part of the PS_Larvae data table from Figshare
