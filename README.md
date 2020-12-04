@@ -1,4 +1,7 @@
 # Ana-oysters
+In this presentation I took a dataset from Figshare on oyster larvae taken from different locations in Puget Sound that were then grown in the same environment. I created graphs to show the change in length and area for each of the populations over time.
+
+Below is the organization and contents of all the folders in my project.
 
 ##Packages Used
 -ggplot2
@@ -12,13 +15,14 @@
 
 ##raw_data
 -Copy of PS_Larvae.csv: original data table of PS_Larvae data frame, includes information on the measurements of each oyster over time.
--Copy of Oyster Tile Size Data.csv: original data table of oyster_tile_size data frame
+-Copy of Oyster Tile Size Data.csv: original data table of oyster_tile_size data frame, includes measurements scaled from the tile size
 -Copy of Larval counts - Day 1-By Family.csv: original data table of larval_counts data frame, includes counts of population size and number of dead oysters at each time point for each population at each location
 
 ##output
 -: copy of knitted final presentation file
 
 ##images
-PS_larvae.jpg: image of part of the PS_Larvae data table from Figshare
+-PS_larvae.jpg: image of part of the PS_Larvae data table from Figshare
+-oyster_larvae_shape: image of oyster larvae to show their shape
 
 
