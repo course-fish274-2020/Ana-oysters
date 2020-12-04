@@ -1,6 +1,8 @@
 # Ana-oysters
 In this presentation I took a dataset from Figshare on oyster larvae taken from different locations in Puget Sound that were then grown in the same environment. I created graphs to show the change in length and area for each of the populations over time.
 
+My purpose now is to maybe try and use the two other data tables and also tidyr now that I deleted my site-specific graphs.
+
 Below is the organization and contents of all the folders in my project.
 
 ##Packages Used
