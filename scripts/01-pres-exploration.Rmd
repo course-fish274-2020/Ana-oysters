@@ -48,9 +48,27 @@ avg_l_popul$Days = c(0, 14, 7, 0, 14, 7, 0, 14, 7)
 #scatterplot of days passed vs length for each population with a line of best fit for each population
 daysvslength <- ggplot(data = avg_l_popul, mapping = aes(x = Days, y = mean_l, group = Population)) +
   geom_point(aes(shape = Population, color = Population, size = 3)) +
+  geom_line(aes(color=Population)) +  
   labs(x = "Days", y = "Average Shell Length (mm)") +
   scale_x_continuous(breaks = c (0, 7, 14)) +
   ggtitle("Shell Length over Time by Population")
+print(daysvslength)
+```
+
+##Average Shell Area
+
+
+```{r, message = FALSE, echo = FALSE}
+#average area for each population
+avg_a_popul <- summarize(popul_days, mean_a = mean(Area), na.rm = TRUE)
+#added column for days after start
+avg_a_popul$Days = c(0, 14, 7, 0, 14, 7, 0, 14, 7)
+#scatterplot of days passed vs length for each population with a line of best fit for each population
+daysvslength <- ggplot(data = avg_a_popul, mapping = aes(x = Days, y = mean_a, group = Population)) +
+  geom_point(aes(shape = Population, color = Population, size = 3)) +
+  labs(x = "Days", y = "Average Shell Area (mm^2)") +
+  scale_x_continuous(breaks = c (0, 7, 14)) +
+  ggtitle("Shell Area over Time by Population")
 print(daysvslength)
 ```
 
@@ -73,6 +91,7 @@ popul_days_sep <- popul_days %>%
 popul_days_sep$Days.after.start[is.na(popul_days$Days.after.start)] <- 0
 #making individual data tables for each location
 fidalgo_bay <- filter(popul_days_sep, str_detect(location, "NF"), na.rm = TRUE)
+f1_mean <- aggregate(.~number, data = fidalgo_bay$Average_Length, mean)
 oyster_bay <- filter(popul_days_sep, str_detect(location, "SS"), na.rm = TRUE)
 daobob_bay <- filter(popul_days_sep, str_detect(location, "HC"), na.rm = TRUE)
 ```
@@ -80,7 +99,7 @@ daobob_bay <- filter(popul_days_sep, str_detect(location, "HC"), na.rm = TRUE)
 
 ```{r, message = FALSE, echo = FALSE}
 #3 scatterplots of days passed vs length for each population location with site-specific data
-daysvslength_fidalgo <- ggplot(data = fidalgo_bay, mapping = aes(x = Days.after.start, y = Average_Length, group = number)) +
+daysvslength_fidalgo <- ggplot(data = fidalgo_mean, mapping = aes(x = Days.after.start, y = mean_l, group = number)) +
   geom_point(aes(size = 3, shape = number, color = number)) +
   scale_x_continuous(breaks = c (0, 7, 14)) +
   labs(x = "Days", y = "Average Shell Length (mm)") +
