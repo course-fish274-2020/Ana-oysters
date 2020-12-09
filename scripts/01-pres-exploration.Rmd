@@ -10,7 +10,7 @@ output:
 library(ggplot2)
 library(dplyr)
 library(tidyr)
-library(stringr)
+library(kableExtra)
 ```
 
 
@@ -18,10 +18,10 @@ library(stringr)
 
 The experiment data I'm using came from a paper called ["Consistent diferences in Fitness Traits across Multiple Generations of Olympia Oysters"](https://www.nature.com/articles/s41598-018-24455-3.pdf), listed as ["F2 Puget Sound Olympia Oyster Population Structure"](https://figshare.com/articles/dataset/F2_Puget_Sound_Olympia_Oyster_Population_Structure/5975452?file=10717249) on Figshare. It was created by Katherine Silliman, Tynan Bowyer, and Steven Roberts.
 
-![Olympia oysters (*Ostrea lurida*)](../images/olympia_oyster.jpg)
+![Olympia oysters (*Ostrea lurida*)](../images/olympia_oyster.jpg){width=60%}
 
 ## The Data
-This experiment explored the growth of populations of oysters taken from different locations all grown in the same lab/natural environment.
+This experiment explored the growth of populations of olympia oysters taken from different locations that were then all grown in the same lab/natural environment.
 
 There are three relevant data tables from the experiment
 
@@ -29,13 +29,17 @@ There are three relevant data tables from the experiment
 
 2. oyster_tile_size: includes size data in relation to tile grown on
 
-3. larval_counts: includes counts of population size and number of dead oysters at each time point for each population at each location
+3. larval_counts: includes counts of population size and number of dead oysters at each time point for each family from each population/location
 
 ## PS_Larvae Data
 
 This is the layout of the data table used for the following  scatterplots. Measurements were taken at day 0, 7 and 14 (July 1, 8, and 15, 2015).
 ```{r, echo = FALSE}
+#read in data and created fancy tibble table
 PS_larvae <- read.csv("../raw_data/Copy of PS_Larvae.csv") 
+PS_larvae_tibble <- as_tibble(PS_larvae)
+kbl(head(PS_larvae_tibble)) %>%
+  kable_styling(bootstrap_options = "striped")
 
 ```
 
@@ -93,11 +97,12 @@ print(areavsdays)
 
 ## Population Reproduction Over Time
 
-These oysters spawned before/during the measurement data on the earlier slides, but are from the same populations (June 19 - July 8, 2015). 
+These oysters spawned before/during the measurement data on the earlier slides, but are from the same populations (June 19 - July 8, 2015). The data is from the larval_counts not PS_larvae data table. 
 
-Fidalgo Bay had a much lower spawn number, but they all still had similar trends.
+Fidalgo Bay had a much lower spawn number, but they all still had similar trends. This is interesting since Fidalgo Bay also had the largest growth rates.
 ```{r, echo = FALSE, message = FALSE}
 #gathered necessary variables from larval_counts raw data
+larval_counts <- read.csv("../raw_data/Copy of Larval counts - Day 1-By Family.csv")
 popul_larvae <- summarize(larval_counts, Date, Population, Family, Total.Larvae,)  %>% 
 group_by(Date,Population) 
 popul_larvae$Date <- as.Date(popul_larvae$Date, "%m/%d/%Y")
@@ -120,6 +125,12 @@ print(larvaevsdate)
 
 ## What I Learned
 
+- Firsthand how important it is to have understandable and usable data table
+- How to alter those tables for what I need
+- How to display better graphics
+- How to interpret data starting from Figshare
+- Develop a good process for coding and creating a presentation in RStudio
+- How to use GitHub for collaboration
 
 
 

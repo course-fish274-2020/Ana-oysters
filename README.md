@@ -25,7 +25,7 @@ Below is the organization and contents of all the folders in my project.
 -01-pres-exploration.html/_files: copy of knitted final presentation file     
 
 ## images
--PS_larvae.jpg: image of part of the PS_Larvae data table from Figshare   
--oyster_larvae_shape: image of oyster larvae to show their shape   
+-oyster_larvae_shape.jpg: image of oyster larvae to show their shape   
+-olympia_oyster.jpg: image of person holding some adult olympia oysters
 
 
