@@ -18,6 +18,8 @@ library(stringr)
 
 The experiment data I'm using came from a paper called ["Consistent diferences in Fitness Traits across Multiple Generations of Olympia Oysters"](https://www.nature.com/articles/s41598-018-24455-3.pdf), listed as ["F2 Puget Sound Olympia Oyster Population Structure"](https://figshare.com/articles/dataset/F2_Puget_Sound_Olympia_Oyster_Population_Structure/5975452?file=10717249) on Figshare. It was created by Katherine Silliman, Tynan Bowyer, and Steven Roberts.
 
+![Olympia oysters (*Ostrea lurida*)](../images/olympia_oyster.jpg)
+
 ## The Data
 This experiment explored the growth of populations of oysters taken from different locations all grown in the same lab/natural environment.
 
@@ -31,11 +33,11 @@ There are three relevant data tables from the experiment
 
 ## PS_Larvae Data
 
-This is the layout of the data table used for the following  scatterplots. Measurements were taken at day 0, 7 and 14.
+This is the layout of the data table used for the following  scatterplots. Measurements were taken at day 0, 7 and 14 (July 1, 8, and 15, 2015).
 ```{r, echo = FALSE}
 PS_larvae <- read.csv("../raw_data/Copy of PS_Larvae.csv") 
+
 ```
-![PS_larvae data table from Figshare](../images/PS_larvae.jpg){width=50%}
 
 ## Average Shell Length over Time in 3 Populations
 
@@ -54,13 +56,13 @@ avg_l_popul$Days = c(0, 14, 7, 0, 14, 7, 0, 14, 7)
 
 ```{r, message = FALSE, echo = FALSE}
 #scatterplot of days passed vs length for each population with a line of best fit for each population
-daysvslength <- ggplot(data = avg_l_popul, mapping = aes(x = Days, y = mean_l, group = Population)) +
-  geom_point(aes(shape = Population, color = Population, size = 3)) +
+lengthvsdays <- ggplot(data = avg_l_popul, mapping = aes(x = Days, y = mean_l, group = Population)) +
+  geom_point(aes(shape = Population, color = Population), size = 3) +
   geom_line(aes(color=Population)) +  
   labs(x = "Days", y = "Average Shell Length (mm)") +
   scale_x_continuous(breaks = c (0, 7, 14)) +
   ggtitle("Shell Length over Time by Population")
-print(daysvslength)
+print(lengthvsdays)
 ```
 
 ## Average Shell Area
@@ -80,14 +82,43 @@ avg_a_popul <- summarize(popul_days, mean_a = mean(Area), na.rm = TRUE)
 #added column for days after start
 avg_a_popul$Days = c(0, 14, 7, 0, 14, 7, 0, 14, 7)
 #scatterplot of days passed vs length for each population with a line of best fit for each population
-daysvslength <- ggplot(data = avg_a_popul, mapping = aes(x = Days, y = mean_a, group = Population)) +
-  geom_point(aes(shape = Population, color = Population, size = 3)) +
+areavsdays <- ggplot(data = avg_a_popul, mapping = aes(x = Days, y = mean_a, group = Population)) +
+  geom_point(aes(shape = Population, color = Population), size = 3) +
   geom_line(aes(color=Population)) +
   labs(x = "Days", y = "Average Shell Area (mm^2)") +
   scale_x_continuous(breaks = c (0, 7, 14)) +
   ggtitle("Shell Area over Time by Population")
-print(daysvslength)
+print(areavsdays)
 ```
+
+## Population Reproduction Over Time
+
+These oysters spawned before/during the measurement data on the earlier slides, but are from the same populations (June 19 - July 8, 2015). 
+
+Fidalgo Bay had a much lower spawn number, but they all still had similar trends.
+```{r, echo = FALSE, message = FALSE}
+#gathered necessary variables from larval_counts raw data
+popul_larvae <- summarize(larval_counts, Date, Population, Family, Total.Larvae,)  %>% 
+group_by(Date,Population) 
+popul_larvae$Date <- as.Date(popul_larvae$Date, "%m/%d/%Y")
+#sectioned out only families that spawned and summed for each population
+popul_tot <- summarise(popul_larvae, total_by_date = sum(Total.Larvae))
+popul_tot <- group_by(popul_tot, Population) %>%
+  mutate(popul_total = cumsum(total_by_date))
+```
+
+
+```{r, echo = FALSE}
+#made a graph of oysters spawned over time for each population
+larvaevsdate <- ggplot(popul_tot, mapping = aes(x = Date, y = popul_total, group = Population)) +
+  geom_line(aes(color=Population)) +
+  labs(x = "Date", y = "Total Oysters Spawned") +
+  scale_x_date(breaks = "1 week") +
+  ggtitle("Oysters Spawned over Time by Population")
+print(larvaevsdate)
+```
+
+## What I Learned
 
 
 
