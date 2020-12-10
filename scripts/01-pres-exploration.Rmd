@@ -49,7 +49,7 @@ kbl(head(PS_larvae_tibble)) %>%
 popul_days <- group_by(PS_larvae, Population, Date)
 ```
 
-I took the mean of the average length of each oyster for each population. That led to three data points over time for each population since they were measured every 7 days. To make the dates work correctly I created a string of the days after start for each mean.
+I took the mean of the average length of each oyster for each of the three populations/locations, Daobob Bay, Fidalgo Bay, and Oyster Bay. That led to three data points over time for each population since they were measured every 7 days. To make the dates work correctly I created a string of the days after start for each mean.
 ```{r, message = FALSE}
 #average length for each population
 avg_l_popul <- summarize(popul_days, mean_l = mean(Average_Length), na.rm = TRUE)
@@ -71,7 +71,7 @@ print(lengthvsdays)
 
 ## Average Shell Area
 
-This scatterplot shows the average length of all the oysters for each of the three locations, Daobob Bay, Fidalgo Bay, and Oyster Bay.
+This scatterplot shows the average area of all the oysters for each population.
 
 I created it the same way as the one for average length, just calculated the average area instead.
 
@@ -125,7 +125,7 @@ print(larvaevsdate)
 
 ## What I Learned
 
-- Firsthand how important it is to have understandable and usable data table
+- Firsthand how important it is to have an understandable and usable data table
 - How to alter those tables for what I need
 - How to display better graphics
 - How to interpret data starting from Figshare

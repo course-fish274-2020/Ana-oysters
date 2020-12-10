@@ -1216,7 +1216,7 @@ NA
 </div>
 <div id="average-shell-length-over-time-in-3-populations" class="slide section level2">
 <h1>Average Shell Length over Time in 3 Populations</h1>
-<p>I took the mean of the average length of each oyster for each population. That led to three data points over time for each population since they were measured every 7 days. To make the dates work correctly I created a string of the days after start for each mean.</p>
+<p>I took the mean of the average length of each oyster for each of the three populations/locations, Daobob Bay, Fidalgo Bay, and Oyster Bay. That led to three data points over time for each population since they were measured every 7 days. To make the dates work correctly I created a string of the days after start for each mean.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co">#average length for each population</span></a>
 <a class="sourceLine" id="cb1-2" title="2">avg_l_popul &lt;-<span class="st"> </span><span class="kw">summarize</span>(popul_days, <span class="dt">mean_l =</span> <span class="kw">mean</span>(Average_Length), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb1-3" title="3"><span class="co">#added column for days after start</span></a>
@@ -1225,7 +1225,7 @@ NA
 </div>
 <div id="average-shell-area" class="slide section level2">
 <h1>Average Shell Area</h1>
-<p>This scatterplot shows the average length of all the oysters for each of the three locations, Daobob Bay, Fidalgo Bay, and Oyster Bay.</p>
+<p>This scatterplot shows the average area of all the oysters for each population.</p>
 <p>I created it the same way as the one for average length, just calculated the average area instead.</p>
 <p>The shape of the larvae makes the area smaller than the largest length. But the overall trend is the same, so the oysters are a consistent shape across population, but they grow at different rates.</p>
 <div class="figure">
@@ -1243,7 +1243,7 @@ NA
 <div id="what-i-learned" class="slide section level2">
 <h1>What I Learned</h1>
 <ul>
-<li>Firsthand how important it is to have understandable and usable data table</li>
+<li>Firsthand how important it is to have an understandable and usable data table</li>
 <li>How to alter those tables for what I need</li>
 <li>How to display better graphics</li>
 <li>How to interpret data starting from Figshare</li>
